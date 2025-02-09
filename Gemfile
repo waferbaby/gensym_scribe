@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "dotenv", "~> 3.1"
 gem "restiny", path: "../restiny"
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.1"

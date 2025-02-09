@@ -87,6 +87,7 @@ GEM
     connection_pool (2.5.0)
     crass (1.0.6)
     date (3.4.1)
+    dotenv (3.1.7)
     drb (2.2.1)
     erubi (1.13.1)
     et-orbi (1.2.11)
@@ -286,10 +287,10 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  dotenv (~> 3.1)
   puma (>= 5.0)
   rails (~> 8.0.1)
   restiny!
-  rubocop
   rubocop-rails-omakase
   solid_cache
   solid_queue
