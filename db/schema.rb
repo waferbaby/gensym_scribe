@@ -10,8 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_09_032826) do
-  create_table "items", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2025_02_22_012825) do
+  create_table "destiny_items", force: :cascade do |t|
+    t.string "name"
+    t.bigint "bungie_id"
+    t.string "screenshot_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

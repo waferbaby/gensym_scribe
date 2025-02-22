@@ -1,0 +1,2 @@
+class DestinyItem < ApplicationRecord
+end
