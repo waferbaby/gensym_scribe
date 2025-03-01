@@ -1,0 +1,39 @@
+{
+  "name": "zc",
+  "description": "Request data from VanNet",
+  "options": [
+    {
+      "name": "items",
+      "description": "Discover the tools of a Guardian",
+      "type": 2,
+      "options": [
+        {
+          "name": "screenshot",
+          "description": "Request a reference image for an item",
+          "type": 1,
+          "options": [
+            {
+              "name": "query",
+              "description": "Query item by name",
+              "type": 3,
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "lore",
+          "description": "Request known history and recorded stories for an item",
+          "type": 1,
+          "options": [
+            {
+              "name": "query",
+              "description": "Query item by name",
+              "type": 3,
+              "required": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
