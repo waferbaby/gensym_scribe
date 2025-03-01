@@ -1,37 +1,37 @@
 {
   "name": "zc",
   "description": "Request data from VanNet",
+  "type": 1,
   "options": [
     {
-      "name": "items",
-      "description": "Discover the tools of a Guardian",
-      "type": 2,
+      "name": "screenshot",
+      "description": "Request a reference image for an item",
+      "type": 1,
       "options": [
         {
-          "name": "screenshot",
-          "description": "Request a reference image for an item",
-          "type": 1,
-          "options": [
-            {
-              "name": "query",
-              "description": "Query item by name",
-              "type": 3,
-              "required": true
-            }
-          ]
-        },
+          "name": "query",
+          "description": "Query item by name",
+          "type": 3,
+          "required": true,
+          "autocomplete": true,
+          "min_length": 5,
+          "max_length": 100
+        }
+      ]
+    },
+    {
+      "name": "lore",
+      "description": "Request known history and recorded stories for an item",
+      "type": 1,
+      "options": [
         {
-          "name": "lore",
-          "description": "Request known history and recorded stories for an item",
-          "type": 1,
-          "options": [
-            {
-              "name": "query",
-              "description": "Query item by name",
-              "type": 3,
-              "required": true
-            }
-          ]
+          "name": "query",
+          "description": "Query item by name",
+          "type": 3,
+          "required": true,
+          "autocomplete": true,
+          "min_length": 5,
+          "max_length": 100
         }
       ]
     }
