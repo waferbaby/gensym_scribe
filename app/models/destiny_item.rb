@@ -1,6 +1,9 @@
 class DestinyItem < ApplicationRecord
   def self.search(name)
     where("lower(name) LIKE ?", "%" + sanitize_sql_like(name.downcase) + "%")
+      .limit(10)
+      .order(name: :asc)
+      .pluck(:id, :name)
   end
 
   def screenshot_url
