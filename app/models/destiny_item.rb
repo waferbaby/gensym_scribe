@@ -1,9 +1,10 @@
 class DestinyItem < ApplicationRecord
-  def self.search(name)
-    where("lower(name) LIKE ?", "%" + sanitize_sql_like(name.downcase) + "%")
-      .limit(10)
+  def self.search(name, limit: 10)
+    where("lower(name) LIKE ?", sanitize_sql_like(name.downcase) + "%")
+      .where.not(name: "")
+      .limit(limit)
       .order(name: :asc)
-      .pluck(:id, :name)
+      .pluck(:bungie_id, :name)
   end
 
   def screenshot_url
