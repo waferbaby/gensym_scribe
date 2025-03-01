@@ -269,6 +269,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv (~> 3.1)
   ed25519
+  httpx
   puma (>= 5.0)
   rails (~> 8.0.1)
   restiny

@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "ed25519"
 gem "dotenv", "~> 3.1"
+gem "httpx"
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.1"
 gem "restiny"
