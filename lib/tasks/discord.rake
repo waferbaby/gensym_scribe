@@ -1,7 +1,7 @@
 require_relative "../../config/environment"
 
 namespace :discord do
-  task :register do
+  task :register_commands do
     Rails.logger = Logger.new(STDOUT)
 
     Rails.logger.info("Registering commands from JSON config...")
