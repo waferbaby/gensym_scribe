@@ -10,7 +10,7 @@ namespace :discord do
 
     json = JSON.parse(data)
 
-    client = DiscordClient.new(ENV["DISCORD_APP_ID"], ENV["DISCORD_BOT_TOKEN"])
+    client = Discord::Client.new(ENV["DISCORD_APP_ID"], ENV["DISCORD_BOT_TOKEN"])
     client.register_commands(json, 911511513263665172)
 
     Rails.logger.info("Done!")
