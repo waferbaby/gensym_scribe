@@ -1,6 +1,6 @@
 {
-  "name": "zc",
-  "description": "Request data from VanNet",
+  "name": "gs",
+  "description": "Request data from the Gensym archives",
   "type": 1,
   "options": [
     {
