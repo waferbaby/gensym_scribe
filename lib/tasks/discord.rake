@@ -8,10 +8,10 @@ namespace :discord do
     data = File.read(File.join(Rails.root, "config", "slash_commands.json"))
     raise "Unable to read JSON file" unless data.present?
 
-    json = JSON.parse(data)
+    payload = JSON.parse(data)
 
-    client = Discord::Client.new(ENV["DISCORD_APP_ID"], ENV["DISCORD_BOT_TOKEN"])
-    client.register_commands(json, 911511513263665172)
+    client = Rancour::Client.new(app_id: ENV["DISCORD_APP_ID"], bot_token: ENV["DISCORD_BOT_TOKEN"])
+    client.register_application_commands(payload: payload)
 
     Rails.logger.info("Done!")
   rescue StandardError => e
