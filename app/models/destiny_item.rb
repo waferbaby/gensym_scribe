@@ -9,13 +9,6 @@ class DestinyItem < ApplicationRecord
       .order(name: :asc)
   end
 
-  def screenshot_url
-    url = read_attribute(:screenshot_url)
-    return "" unless url.present?
-
-    "https://bungie.net#{url}"
-  end
-
   def as_json(options = {})
     super(options).except("id", "created_at", "updated_at")
   end
