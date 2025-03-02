@@ -11,7 +11,7 @@ class ImportManifestJob < ApplicationJob
       Restiny.download_manifest_json(definitions: definitions.values)
     end
 
-    raise "Can't find items data" unless manifest.present?
+    raise "Can't find manifest data" unless manifest.present?
 
     data = {}
 
@@ -32,8 +32,10 @@ class ImportManifestJob < ApplicationJob
         class_type: payload["classTime"]
       }
 
-      if data[:lore].key?(item[:bungie_id])
-        item[:lore_entry] = data[:lore][item[:bungie_id]].dig("displayProperties", "description")
+      lore_id = (payload["loreHash"] || bungie_id).to_s
+
+      if data[:lore].key?(lore_id)
+        item[:lore_entry] = data[:lore][lore_id].dig("displayProperties", "description")
       end
 
       DestinyItem.upsert(item, unique_by: :bungie_id)
