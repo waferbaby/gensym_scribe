@@ -1,13 +1,15 @@
+require "rancour"
+
 class WebhooksController < ApplicationController
   before_action :validate_request
 
   def index
     response = case params[:type].to_i
-    when Discord::Interaction::PING
-      { type: Discord::Interaction::PONG }
-    when Discord::Interaction::APPLICATION_COMMAND
+    when Rancour::Interaction::PING
+      { type: 1 }
+    when Rancour::Interaction::APPLICATION_COMMAND
       process_command(params["data"]&.dig("options").first)
-    when Discord::Interaction::APPLICATION_COMMAND_AUTOCOMPLETE
+    when Rancour::Interaction::APPLICATION_COMMAND_AUTOCOMPLETE
       process_autocomplete_command(params)
     end
 
