@@ -7,7 +7,7 @@ class ImportManifestJob < ApplicationJob
       lore: Restiny::ManifestDefinition::LORE
     }
 
-    manifest = Rails.cache.fetch("ZavalaClubManifest-#{Time.now.strftime('%Y-%m-%d')}") do
+    manifest = Rails.cache.fetch("D2Manifest-#{Time.now.strftime('%Y-%m-%d')}") do
       Restiny.download_manifest_json(definitions: definitions.values)
     end
 
