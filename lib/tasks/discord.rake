@@ -13,7 +13,7 @@ namespace :discord do
     data = File.read(File.join(Rails.root, "config", "slash_commands.json"))
     raise "Unable to read JSON file" unless data.present?
 
-    client.register_application_commands(JSON.parse(data), guild_id: 257440210810437633)
+    client.register_application_commands(JSON.parse(data))
 
     Rails.logger.info("Done!")
   rescue StandardError => e
