@@ -1,6 +1,8 @@
 require "rancour"
 
 class WebhooksController < ApplicationController
+  BUNGIE_URL = "https://bungie.com/"
+
   before_action :validate_request
 
   def index
@@ -25,12 +27,13 @@ class WebhooksController < ApplicationController
 
     bungie_id = command[:options].first[:value]
     item = DestinyItem.find_by(bungie_id: bungie_id)
+    raise "Unknown item" unless item.present?
 
     embed = case command.fetch(:name, false)
     when "lore"
       { title: item.name, description: item.lore_entry }
     when "screenshot"
-      { title: item.name, image: { url: item.screenshot_url } }
+      { title: item.name, image: { url: BUNGIE_URL + item.screenshot_url } }
     end
 
     {
@@ -67,14 +70,12 @@ class WebhooksController < ApplicationController
   end
 
   def validate_request
-    verification_key = Ed25519::VerifyKey.new([ ENV["DISCORD_APP_PUBLIC_KEY"] ].pack("H*"))
-
-    signature = request.headers["HTTP_X_SIGNATURE_ED25519"]
-    timestamp = request.headers["HTTP_X_SIGNATURE_TIMESTAMP"]
-
-    raise "Missing verification headers" unless signature.present? && timestamp.present?
-
-    verification_key.verify([ signature ].pack("H*"), "#{timestamp}#{request.raw_post}")
+    Rancour::Webhook.validate_request(
+      public_key: ENV["DISCORD_APP_PUBLIC_KEY"],
+      body: request.raw_post,
+      signature: request.headers["HTTP_X_SIGNATURE_ED25519"],
+      timestamp: request.headers["HTTP_X_SIGNATURE_TIMESTAMP"]
+    )
   rescue StandardError => e
     Rails.logger.error("Failed to validate webhook request: #{e}")
     head :unauthorized
