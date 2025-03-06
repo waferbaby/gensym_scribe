@@ -23,14 +23,19 @@ class ImportManifestJob < ApplicationJob
     end
 
     data[:items]&.each do |bungie_id, payload|
+      display_properties = payload["displayProperties"]
+
       item = {
         bungie_id: payload["hash"].to_s,
-        name: payload.dig("displayProperties", "name"),
+        name: display_properties["name"],
+        description: display_properties["description"],
         screenshot_url: payload["screenshot"],
         item_type: payload["itemType"],
         item_sub_type: payload["itemSubType"],
-        class_type: payload["classTime"]
+        class_type: payload["classType"]
       }
+
+      item[:icon_url] = display_properties["icon"] if display_properties["hasIcon"]
 
       lore_id = (payload["loreHash"] || bungie_id).to_s
 
