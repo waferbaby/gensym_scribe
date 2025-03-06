@@ -188,6 +188,8 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
+    rancour (0.1)
+      httpx (~> 1.4)
     rdoc (6.12.0)
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
@@ -269,9 +271,9 @@ PLATFORMS
 DEPENDENCIES
   dotenv (~> 3.1)
   ed25519
-  httpx
   puma (>= 5.0)
   rails (~> 8.0.1)
+  rancour
   restiny
   rubocop-rails-omakase
   sqlite3 (>= 2.1)
