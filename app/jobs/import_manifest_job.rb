@@ -27,12 +27,13 @@ class ImportManifestJob < ApplicationJob
 
       item = {
         bungie_id: payload["hash"].to_s,
-        name: display_properties["name"],
+        class_type: payload["classType"],
         description: display_properties["description"],
-        screenshot_url: payload["screenshot"],
-        item_type: payload["itemType"],
         item_sub_type: payload["itemSubType"],
-        class_type: payload["classType"]
+        item_type: payload["itemType"],
+        name: display_properties["name"],
+        screenshot_url: payload["screenshot"],
+        tier_type: payload.dig("inventory", "tierType")
       }
 
       item[:icon_url] = display_properties["icon"] if display_properties["hasIcon"]
