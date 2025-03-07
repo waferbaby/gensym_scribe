@@ -31,9 +31,17 @@ class WebhooksController < ApplicationController
 
     embed = case command.fetch(:name, false)
     when "lore"
-      { title: item.name, description: item.lore_entry }
+      { title: item.name, description: item.lore_entry }.tap do |entry|
+        entry[:description] = item.description if item.description.present?
+        entry[:thumbnail] = { url: BUNGIE_URL + item.icon_url, width: 96, height: 96 } if item.icon_url.present?
+      end
     when "screenshot"
       { title: item.name, image: { url: BUNGIE_URL + item.screenshot_url } }
+    end
+
+    unless embed.nil?
+      embed[:url] = "https://ishtar-collective.net/items/#{item.bungie_id}"
+      embed[:description] = item.description if item.description.present?
     end
 
     {
