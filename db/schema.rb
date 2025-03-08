@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_06_121349) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_08_222648) do
   create_table "destiny_items", force: :cascade do |t|
     t.string "name"
     t.bigint "bungie_id"
@@ -24,6 +24,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_121349) do
     t.string "description"
     t.string "icon_url"
     t.integer "tier_type", default: 0
+    t.string "summary"
+    t.string "flavour_text"
     t.index ["bungie_id"], name: "index_destiny_items_on_bungie_id", unique: true
   end
 end
