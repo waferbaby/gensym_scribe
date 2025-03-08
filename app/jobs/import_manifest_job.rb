@@ -29,6 +29,8 @@ class ImportManifestJob < ApplicationJob
         bungie_id: payload["hash"].to_s,
         class_type: payload["classType"],
         description: display_properties["description"],
+        flavour_text: payload["flavorText"],
+        summary: payload["itemTypeAndTierDisplayName"],
         item_sub_type: payload["itemSubType"],
         item_type: payload["itemType"],
         name: display_properties["name"],
