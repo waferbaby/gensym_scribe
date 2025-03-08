@@ -32,16 +32,14 @@ class WebhooksController < ApplicationController
     embed = case command.fetch(:name, false)
     when "lore"
       { title: item.name, description: item.lore_entry }.tap do |entry|
-        entry[:description] = item.description if item.description.present?
         entry[:thumbnail] = { url: BUNGIE_URL + item.icon_url, width: 96, height: 96 } if item.icon_url.present?
       end
     when "screenshot"
-      { title: item.name, image: { url: BUNGIE_URL + item.screenshot_url } }
+      { title: item.name, description: item.flavour_text, image: { url: BUNGIE_URL + item.screenshot_url, width: 1920, height: 1080 } }
     end
 
     unless embed.nil?
       embed[:url] = "https://ishtar-collective.net/items/#{item.bungie_id}"
-      embed[:description] = item.description if item.description.present?
     end
 
     {
@@ -57,7 +55,7 @@ class WebhooksController < ApplicationController
   def process_autocomplete_command(command)
     query = command.dig(:data, :options)&.first.dig(:options).select { |option| option[:focused] == true }&.first.dig(:value)
 
-    items = DestinyItem.search(query)
+    items = DestinyItem.search(query, limit: 20)
             .with_lore
             .with_screenshot
             .pluck(:bungie_id, :name)
