@@ -30,14 +30,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_073211) do
   end
 
   create_table "destiny_seasonal_acts", force: :cascade do |t|
-    t.bigint "act_id"
+    t.bigint "season_id"
     t.integer "position"
     t.integer "ranks"
     t.string "name"
     t.datetime "start_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["act_id", "position"], name: "index_destiny_seasonal_acts_on_act_id_and_position"
+    t.index ["season_id", "position"], name: "index_destiny_seasonal_acts_on_season_id_and_position"
   end
 
   create_table "destiny_seasons", force: :cascade do |t|
