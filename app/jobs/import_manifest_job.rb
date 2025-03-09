@@ -4,10 +4,11 @@ class ImportManifestJob < ApplicationJob
   def perform(*args)
     definitions = {
       items: Restiny::ManifestDefinition::INVENTORY_ITEM,
-      lore: Restiny::ManifestDefinition::LORE
+      lore: Restiny::ManifestDefinition::LORE,
+      seasons: Restiny::ManifestDefinition::SEASON
     }
 
-    manifest = Rails.cache.fetch("D2Manifest-#{Time.now.strftime('%Y-%m-%d')}") do
+    manifest = Rails.cache.fetch("D2-Manifest-#{Time.now.strftime('%Y-%m-%d')}") do
       Restiny.download_manifest_json(definitions: definitions.values)
     end
 
@@ -20,6 +21,45 @@ class ImportManifestJob < ApplicationJob
       raise "Unable to read #{name} JSON" unless contents.present?
 
       data[name] = JSON.parse(contents)
+    end
+
+    data[:seasons]&.each do |bungie_id, payload|
+      display_properties = payload["displayProperties"]
+      next unless display_properties["name"].present?
+
+      season = {
+        bungie_id: payload["hash"].to_s,
+        description: display_properties["description"],
+        name: display_properties["name"],
+        start_date: payload["startDate"],
+        end_date: payload["endDate"],
+        background_image_url: payload["backgroundImagePath"]
+      }
+
+      season[:icon_url] = display_properties["icon"] if display_properties["hasIcon"]
+
+      DestinySeason.upsert(season, unique_by: :bungie_id)
+
+      if payload["acts"].present?
+        season_id = DestinySeason.find_by(bungie_id: payload["hash"])&.id
+        next unless season_id.present?
+
+        position = 1
+
+        payload["acts"].each do |act_payload|
+          act = {
+            season_id: season_id,
+            name: act_payload["displayName"],
+            start_date: act_payload["startTime"],
+            position: position,
+            ranks: act_payload["rankCount"]
+          }
+
+          DestinySeasonalAct.upsert(act)# , unique_by: %i[season_id position])
+
+          position += 1
+        end
+      end
     end
 
     data[:items]&.each do |bungie_id, payload|
