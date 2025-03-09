@@ -34,6 +34,22 @@
           "max_length": 100
         }
       ]
+    },
+    {
+      "name": "seasons",
+      "description": "Review pivotal moments in Sol's history",
+      "type": 1,
+      "options": [
+        {
+          "name": "query",
+          "description": "Query item by name",
+          "type": 3,
+          "required": true,
+          "autocomplete": true,
+          "min_length": 5,
+          "max_length": 100
+        }
+      ]
     }
   ]
 }
