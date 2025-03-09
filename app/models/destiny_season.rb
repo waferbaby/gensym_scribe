@@ -1,0 +1,2 @@
+class DestinySeason < ApplicationRecord
+end

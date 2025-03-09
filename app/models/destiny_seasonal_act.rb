@@ -1,0 +1,2 @@
+class DestinySeasonalAct < ApplicationRecord
+end

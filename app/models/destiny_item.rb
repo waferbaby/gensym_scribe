@@ -3,7 +3,7 @@ class DestinyItem < ApplicationRecord
   scope :with_screenshot, -> { where.not(screenshot_url: "") }
 
   def self.search(name, limit: 10)
-    where("lower(name) LIKE ?", sanitize_sql_like(name.downcase) + "%")
+    where("lower(name) LIKE ?", "%" + sanitize_sql_like(name.downcase) + "%")
       .where.not(name: "")
       .limit(limit)
       .order(name: :asc)

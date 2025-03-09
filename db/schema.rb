@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_08_222648) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_073211) do
   create_table "destiny_items", force: :cascade do |t|
     t.string "name"
     t.bigint "bungie_id"
@@ -27,5 +27,30 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_08_222648) do
     t.string "summary"
     t.string "flavour_text"
     t.index ["bungie_id"], name: "index_destiny_items_on_bungie_id", unique: true
+  end
+
+  create_table "destiny_seasonal_acts", force: :cascade do |t|
+    t.bigint "act_id"
+    t.integer "position"
+    t.integer "ranks"
+    t.string "name"
+    t.datetime "start_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["act_id", "position"], name: "index_destiny_seasonal_acts_on_act_id_and_position"
+  end
+
+  create_table "destiny_seasons", force: :cascade do |t|
+    t.bigint "bungie_id"
+    t.string "name"
+    t.string "description"
+    t.integer "number"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "background_image_url"
+    t.string "icon_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bungie_id"], name: "index_destiny_seasons_on_bungie_id", unique: true
   end
 end
