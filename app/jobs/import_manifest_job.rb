@@ -38,10 +38,10 @@ class ImportManifestJob < ApplicationJob
 
       season[:icon_url] = display_properties["icon"] if display_properties["hasIcon"]
 
-      DestinySeason.upsert(season, unique_by: :bungie_id)
+      Destiny::Season.upsert(season, unique_by: :bungie_id)
 
       if payload["acts"].present?
-        season_id = DestinySeason.find_by(bungie_id: payload["hash"])&.id
+        season_id = Destiny::Season.find_by(bungie_id: payload["hash"])&.id
         next unless season_id.present?
 
         position = 1
@@ -55,7 +55,7 @@ class ImportManifestJob < ApplicationJob
             ranks: act_payload["rankCount"]
           }
 
-          DestinySeasonalAct.upsert(act)# , unique_by: %i[season_id position])
+          Destiny::SeasonalAct.upsert(act, unique_by: %i[season_id position])
 
           position += 1
         end
@@ -86,7 +86,7 @@ class ImportManifestJob < ApplicationJob
         item[:lore_entry] = data[:lore][lore_id].dig("displayProperties", "description")
       end
 
-      DestinyItem.upsert(item, unique_by: :bungie_id)
+      Destiny::Item.upsert(item, unique_by: :bungie_id)
     end
 
     true
