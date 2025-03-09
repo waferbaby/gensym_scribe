@@ -37,7 +37,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_073211) do
     t.datetime "start_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["season_id", "position"], name: "index_destiny_seasonal_acts_on_season_id_and_position"
+    t.index ["season_id", "position"], name: "index_destiny_seasonal_acts_on_season_id_and_position", unique: true
   end
 
   create_table "destiny_seasons", force: :cascade do |t|

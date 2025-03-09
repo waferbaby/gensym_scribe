@@ -7,7 +7,7 @@ class CreateDestinySeasonalActs < ActiveRecord::Migration[8.0]
       t.string :name
       t.datetime :start_date
       t.timestamps
-      t.index [ :season_id, :position ]
+      t.index [ :season_id, :position ], unique: true
     end
   end
 end
